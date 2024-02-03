@@ -1,7 +1,7 @@
 	{
 	  inputs = {
       # Moderately annoying that we have to do this as Python 3.12 is broken on main
-      nixpkgs.url = "github:NixOS/nixpkgs/stable";
+      nixpkgs.url = "github:NixOS/nixpkgs";
       flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -27,8 +27,6 @@
               python312
               poetry
               pyenv
-              python312Packages.pip
-              python312Packages.cookiecutter
             ];
           };
         }
