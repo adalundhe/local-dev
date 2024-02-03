@@ -1,34 +1,60 @@
-type := "python3"
-project := "my_project"
-app_base := "scorbettUM/app-templates"
-app := "fast-api"
-flake_base := "scorbettUM/local-dev"
-path := join(
-    invocation_directory(),
-    project
-)
-unstable_version := "python312"
+create-project *ARGS:
+    #!/usr/bin/env python
+    
+    import os
+    import subprocess
+    from typing import Dict, List
 
 
-create-project type=type project=project app=app app_base=app_base flake_base=flake_base path=path:
-    #!/usr/bin/env bash
-    set -euxo pipefail
+    def parse_args(command_args: str):
+        args = {}
+        for arg in command_args.split():
+            if '=' in arg:
+                arg_name, arg_value = arg.split('=', maxsplit=1)
+                args[arg_name.strip('-')] = arg_value
 
-    mkdir -p {{path}} && cd {{path}}
+        return args
 
-    git clone --branch {{app}} "git@github.com:{{app_base}}" {{path}}
-    rm -rf .git
-    git init
-    git add -A
+    def run_flake(args: Dict[str, str]):
+        current_directory = os.getcwd()
+        project_directory = args.get('path', 'my_project')
+        project_template_type = args.get('template', 'python-app')
+        project_source = args.get('source', 'scorbettUM/app-templates')
+        project_flake_repo = args.get('flake-repo', 'scorbettUM/local-dev')
+        project_flake = args.get('flake', 'python3')
 
-    touch ".envrc"
 
-    if [[ "{{type}}" == "{{unstable_version}}" ]]; then
-        echo 'NIXPKGS_ALLOW_BROKEN=1 use flake "github:{{flake_base}}?dir={{type}}" --impure' | tee ".envrc" > /dev/null
-    else
-        echo 'use flake "github:{{flake_base}}?dir={{type}}"' | tee ".envrc" > /dev/null
-    fi
+        project_path = os.path.join(
+            current_directory,
+            project_directory
+        )
+        
+        if os.path.exists(project_path) is False:
+            os.makedirs(project_path)
 
-    direnv allow
+        commands = [
+            f'git clone --branch {project_template_type} git@github.com:{project_source} .',
+            'rm -rf .git',
+            'git init',
+            'git add -A',
+            'touch .envrc',
+            f'echo \'use flake "github:{project_flake_repo}?dir={project_flake}"\' | tee .envrc'
+        ]
+
+        for command in commands:
+            result = subprocess.run(
+                command.split(),
+                cwd=project_path,
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                text=True
+            )
+
+            if result.returncode > 0:
+                raise Exception(f'Err. - Template creation failed: {result.stderr}')
+
+    run_flake(
+        parse_args("{{ARGS}}")
+    )
 
     

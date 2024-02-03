@@ -14,6 +14,7 @@
             direnv = super.direnv;
             docker = super.docker;
             ripgrep = super.ripgrep;
+            python = super.python3;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -27,6 +28,9 @@
               xcode-install
               direnv
               ripgrep
+              python3
+              docker
+              docker-compose
             ];
             shellHook = ''
 
