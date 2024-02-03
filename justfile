@@ -2,7 +2,7 @@ project := "my_project"
 app_base := "scorbettUM/app-templates"
 app := "fast-api"
 flake_base := "scorbettUM/local-dev"
-type := "python312"
+type := "python3"
 path := join(
     invocation_directory(),
     project

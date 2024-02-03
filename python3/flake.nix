@@ -9,10 +9,10 @@
       (system:
         let
           overlay = (self: super: {
-            python = super.python311;
+            python = super.python3;
             poetry = super.poetry;
-            pip = super.python311Packages.pip;
-            cookiecutter = super.python311Packages.cookiecutter;
+            pip = super.python3Packages.pip;
+            cookiecutter = super.python3Packages.cookiecutter;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -22,11 +22,11 @@
         {
           devShells.default = mkShell {
             buildInputs = [
-              python311
+              python3
               poetry
               pyenv
-              python311Packages.pip
-              python311Packages.cookiecutter
+              python3Packages.pip
+              python3Packages.cookiecutter
             ];
           };
         }
