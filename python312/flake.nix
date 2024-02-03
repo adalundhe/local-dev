@@ -12,9 +12,6 @@
           overlay = (self: super: {
             python = super.python312;
             poetry = super.poetry;
-            pyenv = super.pyenv;
-            pip = super.python3Packages.pip;
-            cookiecutter = super.python3Packages.cookiecutter;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -26,9 +23,6 @@
             buildInputs = [
               python312
               poetry
-              pyenv
-              python3Packages.pip
-              python3Packages.cookiecutter
             ];
           };
         }
