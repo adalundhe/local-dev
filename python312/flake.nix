@@ -13,7 +13,6 @@
             python = super.python312;
             poetry = super.poetry;
             pip = super.python3Packages.pip;
-            cookiecutter = super.python3Packages.cookiecutter;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -30,7 +29,7 @@
               # python312Packages.pip is horribly broken so we have to do this.
               # Gross.
               python3Packages.pip
-              python3Packages.cookiecutter
+              python312Packages.cookiecutter
             ];
           };
         }
