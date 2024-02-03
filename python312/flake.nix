@@ -12,9 +12,11 @@
           overlay = (self: super: {
             python = super.python312;
             poetry = super.poetry;
+            pyenv = super.pyenv;
           });
           pkgs = import nixpkgs {
             inherit system;
+            allowBroken = true;
           };
         in
         with pkgs;
