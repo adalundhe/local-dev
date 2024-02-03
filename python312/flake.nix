@@ -1,7 +1,7 @@
 	{
 	  inputs = {
       # Moderately annoying that we have to do this as Python 3.12 is broken on main
-      nixpkgs.url = "github:NixOS/nixpkgs";
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
       flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -13,10 +13,11 @@
             python = super.python312;
             poetry = super.poetry;
             pyenv = super.pyenv;
+            pip = super.python3Packages.pip;
+            cookiecutter = super.python3Packages.cookiecutter;
           });
           pkgs = import nixpkgs {
             inherit system;
-            allowBroken = true;
           };
         in
         with pkgs;
@@ -26,6 +27,8 @@
               python312
               poetry
               pyenv
+              python3Packages.pip
+              python3Packages.cookiecutter
             ];
           };
         }
