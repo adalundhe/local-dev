@@ -1,7 +1,7 @@
 	{
 	  inputs = {
       # Moderately annoying that we have to do this as Python 3.12 is broken on main
-      nixpkgs.url = "github:NixOS/nixpkgs";
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -12,7 +12,6 @@
           overlay = (self: super: {
             python = super.python312;
             poetry = super.poetry;
-            pip = super.python3Packages.pip;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -25,11 +24,6 @@
               python312
               poetry
               pyenv
-
-              # python312Packages.pip is horribly broken so we have to do this.
-              # Gross.
-              python3Packages.pip
-              python312Packages.cookiecutter
             ];
           };
         }
