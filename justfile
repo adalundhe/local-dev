@@ -21,6 +21,6 @@ create-project:
     git add -A
 
     touch ".envrc"
-    echo 'use flake "github:{{flake_base}}dir={{type}}"' | tee ".envrc" > /dev/null
+    echo 'use flake "github:{{flake_base}}?dir={{type}}"' | tee ".envrc" > /dev/null
 
     
