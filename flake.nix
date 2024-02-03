@@ -1,46 +1,56 @@
-	{
-	  inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs";
-      flake-utils.url = "github:numtide/flake-utils";
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: 
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem
       (system:
         let
           pkgs = import nixpkgs {
             inherit system;
+            config.allowUnfree = true;
           };
         in
-        with pkgs;
         {
-          devShells.default = mkShell {
-            buildInputs = [
-              just
-              xcode-install
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
               direnv
+              gum
+              just
               ripgrep
               python3
               nodejs_20
               docker
               docker-compose
               nodejs_20.pkgs.pnpm
+              xcode-install
             ];
-            shellHook = ''
-            if [[ ! -e local-dev ]]; then
-              git clone git@github.com:scorbettUM/local-dev.git
-              echo 'eval "$(direnv hook zsh)"' | sudo tee -a $HOME/.zshrc > /dev/null
+            shellHook =
+              let
+                sourceEnv = f: ''
+                  if [[ -f ${f} ]]; then
+                    echo 1>&2 'sourcing env variables from ${f}'
+                    set -a
+                    . ${f}
+                    set +a
+                  fi
+                '';
+              in
 
-              touch $HOME/.envrc
-              echo 'use flake "github.com:scorbettUM/local-dev"' | sudo tee $HOME/.envrc > /dev/null
-
-              cp local-dev/justfile $HOME/justfile
-              
-              rm -rf local-dev
-            fi
-
-            sudo npm install -g @devcontainers/cli
-            '';
+              ''
+                gum style --border double \
+                  --align center \
+                  --width 50 \
+                  --margin "1 2" \
+                  --padding "2 4" \
+                  'Welcome to local dev!' \
+                  'I hope you enjoy your stay! If you need help, just holler'
+                ${sourceEnv ".env"}
+                ${sourceEnv ".env.local"}
+                [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just
+              '';
           };
         }
       );

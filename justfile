@@ -1,3 +1,7 @@
+_default:
+    @just --list --unsorted
+
+
 create-project *ARGS:
     #!/usr/bin/env python
     
@@ -6,7 +10,6 @@ create-project *ARGS:
     import subprocess
     from pathlib import Path
     from typing import Dict, List
-
 
     def parse_args(command_args: str):
         args = {}
