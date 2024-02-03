@@ -7,7 +7,6 @@ path := join(
     invocation_directory(),
     project
 )
-unstable_version := "python312"
 
 
 create-project type=type project=project app=app app_base=app_base flake_base=flake_base path=path:
@@ -23,11 +22,7 @@ create-project type=type project=project app=app app_base=app_base flake_base=fl
 
     touch ".envrc"
 
-    if [[ "{{type}}" == "{{unstable_version}}" ]]; then
-        echo 'NIXPKGS_ALLOW_BROKEN=1 use flake "github:{{flake_base}}?dir={{type}}" --impure' | tee ".envrc" > /dev/null
-    else
-        echo 'use flake "github:{{flake_base}}?dir={{type}}"' | tee ".envrc" > /dev/null
-    fi
+    echo 'use flake "github:{{flake_base}}?dir={{type}}"' | tee ".envrc" > /dev/null
 
     direnv allow
 
