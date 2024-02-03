@@ -22,5 +22,6 @@ create-project:
 
     touch ".envrc"
     echo 'use flake "github:{{flake_base}}?dir={{type}}"' | tee ".envrc" > /dev/null
+    direnv allow
 
     

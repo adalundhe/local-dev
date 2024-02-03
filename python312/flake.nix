@@ -1,5 +1,6 @@
 	{
 	  inputs = {
+      # Moderately annoying that we have to do this as Python 3.12 is broken on main
       nixpkgs.url = "github:NixOS/nixpkgs";
       flake-utils.url = "github:numtide/flake-utils";
   };
@@ -11,7 +12,7 @@
           overlay = (self: super: {
             python = super.python312;
             poetry = super.poetry;
-            pip = super.python312Packages.pip;
+            pip = super.python3Packages.pip;
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -24,33 +25,12 @@
               python312
               poetry
               pyenv
-              python312Packages.pip
+
+              # python312Packages.pip is horribly broken so we have to do this.
+              # Gross.
+              python3Packages.pip
               python312Packages.cookiecutter
             ];
-            shellHook = ''
-              IS_GIT_DIR=$(git rev-parse --is-inside-work-tree)
-
-              if [[ "$IS_GIT_DIR" != "true"  ]]; then
-                  git init
-              fi
-
-              if [[ ! -e .gitignore ]]; then
-                  touch .gitignore && \
-                  echo ".direnv" | tee -a .gitignore > /dev/null
-              fi
-
-              if [[ ! -e .envrc ]]; then
-                  touch .envrc && \
-                  echo 'use flake "github:scorbettUM/local-dev?dir=python"' | tee -a .envrc > /dev/null
-              fi
-
-              if [[ ! -e pyproject.toml ]]; then
-                  touch ruff.toml
-                  poetry init --name myapp -q && \
-                  poetry add -G dev ruff
-                  poetry install --no-root -q
-              fi
-            '';
           };
         }
       );
