@@ -33,7 +33,9 @@
 
               touch $HOME/.envrc
               echo 'use flake "github.com:scorbettUM/local-dev"' | sudo tee $HOME/.envrc > /dev/null
+
               cp local-dev/justfile $HOME/justfile
+              
               rm -rf local-dev
             fi
 
