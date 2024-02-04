@@ -35,6 +35,7 @@
               nodejs_20
               nodejs_20.pkgs.pnpm
               python3
+              awscli2
               ripgrep
               xcode-install
             ];
@@ -62,6 +63,8 @@
                 ${sourceEnv ".env.local"}
 
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
+
+                cp justfile $HOME
               '';
           };
         }) // {
@@ -90,8 +93,15 @@
           }
           (builtins.readFile(
             builtins.fetchurl {
-              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/create_project.py"; 
-              sha256 = "0cz2k3vi76pi22cxjqf370m7rqxq719ridaf8vvw2sir1qm7i8n6";   
+              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/create_project.py"; 
+              sha256 = "";   
+            })
+          );
+        aws-login = prev.writers.writeBashBin "aws-login"
+          (builtins.readFile(
+            builtins.fetchurl {
+              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/aws_login.sh"; 
+              sha256 = "";   
             })
           );
       };
