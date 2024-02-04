@@ -47,7 +47,7 @@ def parse_args(args_set: List[str]):
             )
         )
 
-        exit(0)
+        return {}
 
     args = {}
     for arg in arg_options:
@@ -58,7 +58,7 @@ def parse_args(args_set: List[str]):
     return args
 
 
-def run_flake(args: Dict[str, str]):
+def execute_command(args: Dict[str, str]):
     current_directory = os.getcwd()
     project_directory = args.get("path", "my_project")
     project_template = args.get("template", "fast-api")
@@ -96,4 +96,12 @@ def run_flake(args: Dict[str, str]):
             raise Exception(f"Err. - Template creation failed: {result.stderr}")
 
 
-run_flake(parse_args(sys.argv))
+def run():
+    args = parse_args(sys.argv)
+
+    if len(args) < 1:
+        return
+    
+    execute_command(args)
+
+run()
