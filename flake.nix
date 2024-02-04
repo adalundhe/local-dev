@@ -24,15 +24,16 @@
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               bashInteractive
+              colima
               create-project
-              direnv
               devcontainers
+              direnv
               docker
               docker-compose
               docker-credential-helpers
-              colima
               gum
               just
+              nixpkgs-fmt
               nodejs_20
               nodejs_20.pkgs.pnpm
               python3
