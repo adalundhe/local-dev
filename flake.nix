@@ -39,7 +39,6 @@
               awscli2
               ripgrep
               xcode-install
-              vscode
             ];
             shellHook =
               let
