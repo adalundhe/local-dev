@@ -19,7 +19,6 @@
             colima = super.colima;
             node = super.nodejs_20;
             pnpm = super.nodejs_20.pkgs.pnpm;
-            devcontainers = super.nodejs_20.pkgs.''devcontainers/cli'';
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -38,7 +37,6 @@
               docker
               docker-compose
               nodejs_20.pkgs.pnpm
-              nodejs_20.pkgs.''devcontainers/cli''
             ];
             shellHook = ''
             if [[ ! -e local-dev ]]; then
@@ -47,6 +45,8 @@
               cp local-dev/justfile $HOME/justfile
               rm -rf local-dev
             fi
+
+            sudo npm install -g @devcontainers/cli
             '';
           };
         }
