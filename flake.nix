@@ -88,7 +88,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/create_project.py"; 
-              sha256 = "0w554dqwl51x2l218xjww1zs9hr5rkb4qb37vfl0bv7a00vxlf69";   
+              sha256 = "";   
             })
           );
       };
