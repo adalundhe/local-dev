@@ -102,7 +102,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/aws_login.sh"; 
-              sha256 = "02rdi9c6sy6qgw5x20pla7rjqrhhzmvw2n3gh29plp7smya58416";   
+              sha256 = "0hi0529jsdx7z7qlsvdg98fddxbv7grd68fkm8f6vllkzi57r1rj";   
             })
           );
       };

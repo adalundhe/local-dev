@@ -101,7 +101,7 @@ def execute_command(args: Dict[str, str]):
         "git init",
         "git add -A",
         "touch .envrc",
-        f"echo 'use flake \"github:{project_flake_repo}?dir={project_flake}\"' | tee .envrc",
+        f"echo 'use flake \"github:{project_flake_repo}?dir=projects/{project_flake}\"' | tee .envrc",
         "code --install-extension ms-vscode-remote.remote-containers --force",
     ]
 
