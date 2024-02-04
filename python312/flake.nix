@@ -9,8 +9,14 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
+        
           pkgs = import nixpkgs {
             inherit system;
+            config = {
+              allowUnfree = true;
+              allowUnsupportedSystem = true;
+              allowBroken = true;
+            };
           };
         in
         with pkgs;
@@ -19,7 +25,7 @@
             buildInputs = [
               python312
               poetry
-              pyenv
+              python312Packages.pip
             ];
           };
         }
