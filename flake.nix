@@ -83,12 +83,15 @@
         create-project = prev.writers.writePython3Bin "create-project"
           {
             libraries = [ ];
-            flakeIgnore = [ "E501" "F401" ];
+
+            # There is an annoying list of linting args we have to disable
+            # so Nix will let us build our script in peace.
+            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293"];
           }
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/create_project.py"; 
-              sha256 = "";   
+              sha256 = "0w554dqwl51x2l218xjww1zs9hr5rkb4qb37vfl0bv7a00vxlf69";   
             })
           );
       };

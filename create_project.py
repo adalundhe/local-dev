@@ -7,6 +7,23 @@ import subprocess
 from typing import Dict, List
 
 
+def execute_in_shell(
+    command: str,
+    project_path: str
+):
+    result = subprocess.run(
+        command.split(),
+        cwd=project_path,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+
+    if result.returncode > 0:
+        raise Exception(f"Err. - Template creation failed: {result.stderr}")
+    
+    return result
+
 def parse_args(args_set: List[str]):
 
     show_help = [
@@ -42,6 +59,9 @@ def parse_args(args_set: List[str]):
                         --flake-repo (str): The repo to use for Nix Flakes. Should be a 
                                             Github repo and follow the formant 
                                             <USERNAME_OR_ORG/REPO>.
+
+                        --remote (str): The git remote to use for newly created project
+                                        repo.
                         
                 '''
             )
@@ -65,6 +85,7 @@ def execute_command(args: Dict[str, str]):
     project_template_repo = args.get("template-repo", "scorbettUM/app-templates")
     project_flake_repo = args.get("flake-repo", "scorbettUM/local-dev")
     project_flake = args.get("flake", "python3")
+    project_remote = args.get("remote")
 
     project_path = project_directory
     if not project_directory.startswith('/') or ':\\' not in project_directory:
@@ -84,16 +105,17 @@ def execute_command(args: Dict[str, str]):
     ]
 
     for command in commands:
-        result = subprocess.run(
-            command.split(),
-            cwd=project_path,
-            stderr=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            text=True,
+        execute_in_shell(
+            command,
+            project_path
         )
 
-        if result.returncode > 0:
-            raise Exception(f"Err. - Template creation failed: {result.stderr}")
+    if project_remote:
+        execute_in_shell(
+            f'git remote add origin {project_remote}',
+            project_path
+        )
+        
 
 
 def run():
