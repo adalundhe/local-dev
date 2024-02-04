@@ -8,12 +8,6 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
-          overlay = (self: super: {
-            python = super.python3;
-            poetry = super.poetry;
-            pip = super.python3Packages.pip;
-            cookiecutter = super.python3Packages.cookiecutter;
-          });
           pkgs = import nixpkgs {
             inherit system;
           };

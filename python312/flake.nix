@@ -9,11 +9,6 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
-          overlay = (self: super: {
-            python = super.python312;
-            poetry = super.poetry;
-            pyenv = super.pyenv;
-          });
           pkgs = import nixpkgs {
             inherit system;
           };
