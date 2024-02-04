@@ -8,17 +8,6 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
-          overlay = (self: super: {
-            just = super.just;
-            xcode-install = super.xcode-install;
-            direnv = super.direnv;
-            docker = super.docker;
-            docker-compose = super.docker-compose;
-            ripgrep = super.ripgrep;
-            python = super.python3;
-            node = super.nodejs_20;
-            pnpm = super.nodejs_20.pkgs.pnpm;
-          });
           pkgs = import nixpkgs {
             inherit system;
           };
@@ -41,6 +30,9 @@
             if [[ ! -e local-dev ]]; then
               git clone git@github.com:scorbettUM/local-dev.git
               echo 'eval "$(direnv hook zsh)"' | sudo tee -a $HOME/.zshrc > /dev/null
+
+              touch $HOME/.envrc
+              echo 'use flake "github.com:scorbettUM/local-dev"' | sudo tee $HOME/.envrc > /dev/null
               cp local-dev/justfile $HOME/justfile
               rm -rf local-dev
             fi
