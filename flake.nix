@@ -1,10 +1,10 @@
-	{
-	  inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs";
-      flake-utils.url = "github:numtide/flake-utils";
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: 
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem
       (system:
         let
@@ -18,18 +18,17 @@
                 allowBroken = true;
               };
             };
+
         in
-        with pkgs;
         {
-          devShells.default = mkShell {
-            buildInputs = [
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
               bashInteractive
               create-project
               devcontainers
               direnv
               docker
               docker-compose
-              docker-credential-helpers
               gum
               just
               nixpkgs-fmt
@@ -65,8 +64,7 @@
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
               '';
           };
-        }
-      ) // {
+        }) // {
       overlays.default = final: prev: {
         devcontainers = prev.mkYarnPackage {
           name = "devcontainer";
@@ -87,7 +85,12 @@
             libraries = [ ];
             flakeIgnore = [ "E501" "F401" ];
           }
-          (builtins.readFile ./create-project.py);
+          (builtins.readFile(
+            builtins.fetchurl {
+              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/create_project.py"; 
+              sha256 = "0w554dqwl51x2l218xjww1zs9hr5rkb4qb37vfl0bv7a00vxlf69";   
+            })
+          );
       };
     };
 }
