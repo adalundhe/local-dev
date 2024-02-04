@@ -25,6 +25,7 @@
             buildInputs = with pkgs; [
               bashInteractive
               create-project
+              aws-login
               devcontainers
               direnv
               docker
@@ -94,14 +95,14 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/create_project.py"; 
-              sha256 = "";   
+              sha256 = "0cz2k3vi76pi22cxjqf370m7rqxq719ridaf8vvw2sir1qm7i8n6";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/aws_login.sh"; 
-              sha256 = "";   
+              sha256 = "0mdqa9w1p6cmli6976v4wi0sw9r4p5prkj7lzfd1877wk11c9c73";   
             })
           );
       };
