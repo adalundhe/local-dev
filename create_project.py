@@ -24,6 +24,7 @@ def execute_in_shell(
     
     return result
 
+
 def parse_args(args_set: List[str]):
 
     show_help = [
@@ -114,8 +115,7 @@ def execute_command(args: Dict[str, str]):
         execute_in_shell(
             f'git remote add origin {project_remote}',
             project_path
-        )
-        
+        ) 
 
 
 def run():
@@ -125,5 +125,6 @@ def run():
         return
     
     execute_command(args)
+
 
 run()
