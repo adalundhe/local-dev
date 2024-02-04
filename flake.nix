@@ -13,10 +13,9 @@
             xcode-install = super.xcode-install;
             direnv = super.direnv;
             docker = super.docker;
+            docker-compose = super.docker-compose;
             ripgrep = super.ripgrep;
             python = super.python3;
-            docker-credential-helpers = super.docker-credential-helpers;
-            colima = super.colima;
             node = super.nodejs_20;
             pnpm = super.nodejs_20.pkgs.pnpm;
           });
