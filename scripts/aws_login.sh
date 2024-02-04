@@ -2,6 +2,7 @@
 PROFILE=${1:-"prod"}
 REGION=${2:-"us-east-1"}
 
+
 aws sso login --profile $PROFILE
 aws codeartifact login --tool pip --region $REGION --domain datavant --domain-owner "$AWS_PROFILE_ID" --repository eng --profile $PROFILE
 aws codeartifact login --tool npm --region $REGION --domain datavant --domain-owner "$AWS_PROFILE_ID" --repository eng --profile $PROFILE
