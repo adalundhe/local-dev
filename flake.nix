@@ -15,6 +15,11 @@
             docker = super.docker;
             ripgrep = super.ripgrep;
             python = super.python3;
+            docker-credential-helpers = super.docker-credential-helpers;
+            colima = super.colima;
+            node = super.nodejs_20;
+            pnpm = super.nodejs_20.pkgs.pnpm;
+            devcontainers = super.nodejs_20.pkgs.''devcontainers/cli'';
           });
           pkgs = import nixpkgs {
             inherit system;
@@ -29,11 +34,13 @@
               direnv
               ripgrep
               python3
+              nodejs_20
               docker
               docker-compose
+              nodejs_20.pkgs.pnpm
+              nodejs_20.pkgs.''devcontainers/cli''
             ];
             shellHook = ''
-
             if [[ ! -e local-dev ]]; then
               git clone git@github.com:scorbettUM/local-dev.git
               echo 'eval "$(direnv hook zsh)"' | sudo tee -a $HOME/.zshrc > /dev/null

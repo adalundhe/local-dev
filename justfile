@@ -2,7 +2,9 @@ create-project *ARGS:
     #!/usr/bin/env python
     
     import os
+    import json
     import subprocess
+    from pathlib import Path
     from typing import Dict, List
 
 
@@ -18,11 +20,10 @@ create-project *ARGS:
     def run_flake(args: Dict[str, str]):
         current_directory = os.getcwd()
         project_directory = args.get('path', 'my_project')
-        project_template_type = args.get('template', 'python-app')
+        project_template_type = args.get('template', 'fast-api')
         project_source = args.get('source', 'scorbettUM/app-templates')
         project_flake_repo = args.get('flake-repo', 'scorbettUM/local-dev')
         project_flake = args.get('flake', 'python3')
-
 
         project_path = os.path.join(
             current_directory,
@@ -38,7 +39,8 @@ create-project *ARGS:
             'git init',
             'git add -A',
             'touch .envrc',
-            f'echo \'use flake "github:{project_flake_repo}?dir={project_flake}"\' | tee .envrc'
+            f'echo \'use flake "github:{project_flake_repo}?dir={project_flake}"\' | tee .envrc',
+            'code --install-extension ms-vscode-remote.remote-containers --force'
         ]
 
         for command in commands:
