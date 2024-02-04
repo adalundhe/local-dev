@@ -8,23 +8,34 @@
     flake-utils.lib.eachDefaultSystem
       (system:
         let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
+          pkgs = import nixpkgs
+            {
+              inherit system;
+              overlays = builtins.attrValues self.overlays;
+              config = {
+                allowUnfree = true;
+                allowUnsupportedSystem = true;
+                allowBroken = true;
+              };
+            };
+
         in
         {
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
+              bashInteractive
               direnv
-              gum
-              just
-              ripgrep
-              python3
-              nodejs_20
+              devcontainers
               docker
               docker-compose
+              docker-credential-helpers
+              colima
+              gum
+              just
+              nodejs_20
               nodejs_20.pkgs.pnpm
+              python3
+              ripgrep
               xcode-install
             ];
             shellHook =
@@ -49,9 +60,26 @@
                   'I hope you enjoy your stay! If you need help, just holler'
                 ${sourceEnv ".env"}
                 ${sourceEnv ".env.local"}
-                [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just
+
+                [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
               '';
           };
-        }
-      );
+        }) // {
+      overlays.default = final: prev: {
+        devcontainers = prev.mkYarnPackage {
+          name = "devcontainer";
+          src = prev.fetchFromGitHub {
+            owner = "devcontainers";
+            repo = "cli";
+            rev = "v0.56.1";
+            hash = "sha256-Q9AYPUJPcPQzSYCQyU0PTz4Cgn16E541IMxT5ofrmHE=";
+          };
+          buildPhase = ''
+            export HOME=$(mktemp -d)
+            yarn --offline compile
+          '';
+          dontStrip = true;
+        };
+      };
+    };
 }

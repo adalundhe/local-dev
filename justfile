@@ -1,10 +1,6 @@
-_default:
-    @just --list --unsorted
-
-
 create-project *ARGS:
     #!/usr/bin/env python
-    
+
     import os
     import json
     import subprocess
@@ -61,5 +57,3 @@ create-project *ARGS:
     run_flake(
         parse_args("{{ARGS}}")
     )
-
-    
