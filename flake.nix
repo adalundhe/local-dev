@@ -24,6 +24,7 @@
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               bashInteractive
+              create-project
               direnv
               devcontainers
               docker
@@ -80,6 +81,12 @@
           '';
           dontStrip = true;
         };
+        create-project = prev.writers.writePython3Bin "create-project"
+          {
+            libraries = [ ];
+            flakeIgnore = [ "E501" "F401" ];
+          }
+          (builtins.readFile ./create-project.py);
       };
     };
 }
