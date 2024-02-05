@@ -99,13 +99,7 @@
         };
         blueprint = prev.writers.writePython3Bin "blueprint"
           {
-<<<<<<< HEAD
             libraries = with prev.python3Packages; [click];
-=======
-            libraries = [
-              (prev.python3.withPackages (ps: with ps; [click]))
-            ];
->>>>>>> 6086ecd65ba452a160b252d03ba085df353c9e9d
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
