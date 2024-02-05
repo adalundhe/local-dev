@@ -96,7 +96,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/create_project.py"; 
-              sha256 = "131il86xbjvb0k64k2pwsgr82zcim667vbm962zn0xhgvhzgvn19";   
+              sha256 = "1x3vxwln7gkk7f8r6q9c4k5wa9wi6fw4dn9wbyfiqdnbnm8jzf9b";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
