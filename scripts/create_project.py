@@ -150,7 +150,7 @@ def execute_command(args: Dict[str, str]):
         )
 
     execute_in_shell(
-            "git add -A",
+        "git add -A",
         project_path
     ) 
 
