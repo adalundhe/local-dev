@@ -40,8 +40,8 @@
               ripgrep
               xcode-install
               python3Packages.cookiecutter
-              python3Packages.werkflow
               gitAndTools.gh
+              werkflow
             ];
             shellHook =
               let
@@ -89,7 +89,9 @@
         };
         blueprint = prev.writers.writePython3Bin "blueprint"
           {
-            libraries = [click];
+            libraries = with prev.python3Packages; [
+              click
+            ];
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
@@ -98,7 +100,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/blueprint.py"; 
-              sha256 = "1i9r0mr9azbjd7l9m7pw0p725kn1qqwmhl92j419vy92sd1jkw0m";   
+              sha256 = "1gj7hkn3lpxq0cp7cmhdpjc0z53vssdhp3xva9bpslr0r5bpyrhv";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
@@ -108,6 +110,15 @@
               sha256 = "0hi0529jsdx7z7qlsvdg98fddxbv7grd68fkm8f6vllkzi57r1rj";   
             })
           );
+        werkflow = prev.pkgs.python3Packages.buildPythonPackage rec {
+          pname = "werkflow";
+          version = "0.1.4";
+          format = "wheel";
+          src = prev.pkgs.python3Packages.fetchPypi {
+            inherit pname version;
+            sha256 = "sha256-KGcyxDfhsWNAKQcD45giu/o9B7ZNSMtKatRGgZr5V/0="; # TODO
+          };
+        };
       };
     };
 }
