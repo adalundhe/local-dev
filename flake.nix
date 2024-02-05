@@ -91,7 +91,7 @@
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
-            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" ];
+            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" ];
           }
           (builtins.readFile(
             builtins.fetchurl {

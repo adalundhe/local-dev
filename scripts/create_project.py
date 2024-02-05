@@ -37,7 +37,6 @@ def execute_in_shell(
             text=True,
         )
         
-
     if result.returncode > 0 and skip_error is False:
         raise Exception(f"Err. - Template creation failed:\n{result.stderr}\n{result.stdout}")
     
