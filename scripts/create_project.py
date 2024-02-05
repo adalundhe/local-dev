@@ -48,17 +48,8 @@ def parse_args(args_set: List[str]):
     ]
 
     arg_options = [
-        arg for arg in args_set if arg.startswith('--') and '--base-path' not in arg
-    ]
-
-    base_paths = [
-        arg for arg in args_set if '--base-path' in arg
-    ]
-
-    base_path = os.getcwd()
-    if len(base_paths) == 1:
-        _, base_path = base_paths.pop().split('=')
-        
+        arg for arg in args_set if arg.startswith('--')
+    ]   
 
     if show_help or len(arg_options) < 1:
         print(
@@ -70,6 +61,8 @@ def parse_args(args_set: List[str]):
 
                     Args:
                         --path (str): Path where the project should be created.
+
+                        --name (str): Name of the project to create.
 
                         --template (str): The name of the project template to use. 
                                           Should match a branch name in the template 
@@ -93,10 +86,7 @@ def parse_args(args_set: List[str]):
             )
         )
 
-        return (
-            base_path,
-            {}
-        )
+        return {}
 
     args = {}
     for arg in arg_options:
@@ -104,17 +94,13 @@ def parse_args(args_set: List[str]):
             arg_name, arg_value = arg.split("=", maxsplit=1)
             args[arg_name.strip("-")] = arg_value
 
-    return (
-        base_path,
-        args
-    )
+    return args
 
 
 def execute_command(
-    base_path: str,
     args: Dict[str, str]
 ):
-    current_directory = base_path
+    project_path = args.get('path', os.getcwd())
     project_name = args.get("name", "myapp")
     project_template = args.get("template", "fast-api")
     project_template_repo = args.get("template-repo", "scorbettUM/app-templates")
@@ -124,11 +110,11 @@ def execute_command(
 
     project_path = project_name
     if not project_name.startswith('/') or ':\\' not in project_name:
-        project_path = os.path.join(current_directory, project_name)
+        project_path = os.path.join(project_path, project_name)
 
     execute_in_shell(
         f'cookiecutter git@github.com:{project_template_repo} --checkout {project_template}',
-        current_directory,
+        project_path,
         interactive_input=f'y\n{project_name}',
         skip_error=True
     )
@@ -169,15 +155,12 @@ def execute_command(
 
 
 def run():
-    base_path, args = parse_args(sys.argv)
+    args = parse_args(sys.argv)
 
     if len(args) < 1:
         return
     
-    execute_command(
-        base_path,
-        args
-    )
+    execute_command(args)
 
 
 run()
