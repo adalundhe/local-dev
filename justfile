@@ -3,7 +3,7 @@ profile := "prod"
 region := "us-east-1"
 base_path := invocation_directory()
 
-create-project *ARGS:
+blueprint *ARGS:
     blueprint "--path={{base_path}}"  "{{ARGS}}"
 
 setup-venv venv_path requirements_path=requirements_path:
