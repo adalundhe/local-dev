@@ -114,7 +114,7 @@ def execute_command(
 
     execute_in_shell(
         f'cookiecutter git@github.com:{project_template_repo} --checkout {project_template}',
-        project_creation_path,
+        project_path,
         interactive_input=f'y\n{project_name}',
         skip_error=True
     )
