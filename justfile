@@ -3,7 +3,7 @@ profile := "prod"
 region := "us-east-1"
 
 create-project *ARGS:
-    create-project "{{ARGS}}"
+    create-project {{ARGS}}
 
 setup-venv venv_path requirements_path=requirements_path:
     python -m venv {{venv_path}} && \

@@ -112,8 +112,6 @@ def execute_command(args: Dict[str, str]):
 
     project_template_path = f'{project_template}-template'
 
-    shutil.rmtree(project_template_path)
-
     execute_in_shell(
         f"git clone --branch {project_template} git@github.com:{project_template_repo} {project_template_path}",
         current_directory
