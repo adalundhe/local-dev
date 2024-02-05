@@ -107,7 +107,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/blueprint.py"; 
-              sha256 = "1cyi6362s0v55rkkc70vghx7pbdw6j7b23n6cbizrmaispa9lh53";   
+              sha256 = "033yksf5278zak2pprf39dljj4cmlpljnkq1afv97vv9j4drrcn6";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
