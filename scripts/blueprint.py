@@ -23,7 +23,8 @@ def execute_in_shell(
             text=True,
         )
 
-        result.communicate(interactive_input)
+        stdoute, stderr = result.communicate(interactive_input)
+        print(stdoute, stderr)
 
 
     else:
@@ -97,7 +98,11 @@ def create(
     execute_in_shell(
         f'cookiecutter git@github.com:{project_template_repo} --checkout {template}',
         path,
-        interactive_input=f'y\n{name}\n{version}',
+        interactive_input='\n'.join([
+            'y',
+            name,
+            version
+        ]),
         skip_error=True
     )
 
@@ -121,7 +126,7 @@ def create(
 
     with open(envrc_path, 'w') as envrc:
         envrc.write(
-            f'use flake \"github:{project_flake_repo}?dir=projects/{language}/{version}\"'
+            f'''use flake \"github:{project_flake_repo}?dir=projects/{language}/{version}\"'''
         )
 
     execute_in_shell(

@@ -50,7 +50,6 @@
               cargo
               go_1_21
               k9s
-              vscode
               terraform
             ];
             shellHook =
