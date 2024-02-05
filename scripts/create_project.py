@@ -57,7 +57,8 @@ def parse_args(args_set: List[str]):
 
     base_path = os.getcwd()
     if len(base_paths) == 1:
-        base_path = base_paths.pop()
+        _, base_path = base_paths.pop().split('=')
+        
 
     if show_help or len(arg_options) < 1:
         print(
