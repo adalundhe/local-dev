@@ -4,7 +4,7 @@ region := "us-east-1"
 base_path := invocation_directory()
 
 create-project *ARGS:
-    create-project "--path={{base_path}}"  "{{ARGS}}"
+    blueprint "--path={{base_path}}"  "{{ARGS}}"
 
 setup-venv venv_path requirements_path=requirements_path:
     python -m venv {{venv_path}} && \

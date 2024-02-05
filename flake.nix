@@ -24,7 +24,7 @@
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               bashInteractive
-              create-project
+              blueprint
               aws-login
               devcontainers
               direnv
@@ -40,6 +40,8 @@
               ripgrep
               xcode-install
               python3Packages.cookiecutter
+              python3Packages.werkflow
+              gitAndTools.gh
             ];
             shellHook =
               let
@@ -85,9 +87,9 @@
           '';
           dontStrip = true;
         };
-        create-project = prev.writers.writePython3Bin "create-project"
+        blueprint = prev.writers.writePython3Bin "blueprint"
           {
-            libraries = [];
+            libraries = [click];
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
@@ -95,7 +97,7 @@
           }
           (builtins.readFile(
             builtins.fetchurl {
-              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/create_project.py"; 
+              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/blueprint.py"; 
               sha256 = "1i9r0mr9azbjd7l9m7pw0p725kn1qqwmhl92j419vy92sd1jkw0m";   
             })
           );
