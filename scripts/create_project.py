@@ -11,7 +11,8 @@ from typing import Dict, List, Optional
 def execute_in_shell(
     command: str,
     project_path: str,
-    interactive_input: Optional[str]=None
+    interactive_input: Optional[str]=None,
+    skip_error: bool=False
 ):
     if interactive_input:
         result = subprocess.Popen(
@@ -36,7 +37,7 @@ def execute_in_shell(
             text=True,
         )
         
-    if result.returncode > 0:
+    if result.returncode > 0 and skip_error is False:
         raise Exception(f"Err. - Template creation failed:\n{result.stderr}\n{result.stdout}")
     
     return result
@@ -119,7 +120,8 @@ def execute_command(args: Dict[str, str]):
     execute_in_shell(
         f'cookiecutter {project_template_path}',
         current_directory,
-        interactive_input=project_name
+        interactive_input=project_name,
+        skip_error=True
     )
 
     shutil.rmtree(project_template_path)
@@ -127,9 +129,7 @@ def execute_command(args: Dict[str, str]):
     commands = [
         "rm -rf .git",
         "git init",
-        "git add -A",
         "touch .envrc",
-        f"echo 'use flake \"github:{project_flake_repo}?dir=projects/{project_flake}\"' | tee .envrc",
         "code --install-extension ms-vscode-remote.remote-containers --force"
     ]
 
@@ -138,6 +138,21 @@ def execute_command(args: Dict[str, str]):
             command,
             project_path
         )
+
+    envrc_path = os.path.join(
+        project_path,
+        '.envrc'
+    )
+
+    with open(envrc_path, 'w') as envrc:
+        envrc.write(
+            f'use flake \"github:{project_flake_repo}?dir=projects/{project_flake}\"'
+        )
+
+    execute_in_shell(
+            "git add -A",
+        project_path
+    ) 
 
     if project_remote:
         execute_in_shell(
