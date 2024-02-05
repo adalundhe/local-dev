@@ -40,6 +40,19 @@
               ripgrep
               xcode-install
               gitAndTools.gh
+              kubectx
+              eksctl
+              kubernetes
+              minikube
+              jq
+              k9s
+              helmfile
+              openssh
+              kubernetes-helm
+              go_1_21
+              vscode
+              rustc
+              cargo
             ];
             shellHook =
               let
