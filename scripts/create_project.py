@@ -2,25 +2,44 @@
 
 import sys
 import os
+import shutil
 import textwrap
 import subprocess
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 def execute_in_shell(
     command: str,
-    project_path: str
+    project_path: str,
+    interactive_input: Optional[str]=None,
+    skip_error: bool=False
 ):
-    result = subprocess.run(
-        command.split(),
-        cwd=project_path,
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        text=True,
-    )
+    if interactive_input:
+        result = subprocess.Popen(
+            command.split(),
+            cwd=project_path,
+            stdin=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
 
-    if result.returncode > 0:
-        raise Exception(f"Err. - Template creation failed: {result.stderr}")
+        result.communicate(
+            input=interactive_input
+        )
+
+    else:
+        result = subprocess.run(
+            command.split(),
+            cwd=project_path,
+            stderr=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
+        
+
+    if result.returncode > 0 and skip_error is False:
+        raise Exception(f"Err. - Template creation failed:\n{result.stderr}\n{result.stdout}")
     
     return result
 
@@ -81,29 +100,32 @@ def parse_args(args_set: List[str]):
 
 def execute_command(args: Dict[str, str]):
     current_directory = os.getcwd()
-    project_directory = args.get("name", "my_project")
+    project_name = args.get("name", "myapp")
     project_template = args.get("template", "fast-api")
     project_template_repo = args.get("template-repo", "scorbettUM/app-templates")
     project_flake_repo = args.get("flake-repo", "scorbettUM/local-dev")
     project_flake = args.get("flake", "python3")
     project_remote = args.get("remote")
 
-    project_path = project_directory
-    if not project_directory.startswith('/') or ':\\' not in project_directory:
-        project_path = os.path.join(current_directory, project_directory)
+    project_path = project_name
+    if not project_name.startswith('/') or ':\\' not in project_name:
+        project_path = os.path.join(current_directory, project_name)
 
-    if os.path.exists(project_path) is False:
-        os.makedirs(project_path)
+    project_template_path = f'{project_template}-template'
 
     execute_in_shell(
-        f"git clone --branch {project_template} git@github.com:{project_template_repo} {project_directory}",
+        f"git clone --branch {project_template} git@github.com:{project_template_repo} {project_template_path}",
         current_directory
     )
 
     execute_in_shell(
-        f'cookiecutter {project_directory}',
-        current_directory
+        f'cookiecutter {project_template_path}',
+        current_directory,
+        interactive_input=project_name,
+        skip_error=True
     )
+
+    shutil.rmtree(project_template_path)
 
     commands = [
         "rm -rf .git",
@@ -111,7 +133,7 @@ def execute_command(args: Dict[str, str]):
         "git add -A",
         "touch .envrc",
         f"echo 'use flake \"github:{project_flake_repo}?dir=projects/{project_flake}\"' | tee .envrc",
-        "code --install-extension ms-vscode-remote.remote-containers --force",
+        "code --install-extension ms-vscode-remote.remote-containers --force"
     ]
 
     for command in commands:
