@@ -35,13 +35,11 @@
               nixpkgs-fmt
               nodejs_20
               nodejs_20.pkgs.pnpm
-              python3
+              (python3.withPackages (ps: with ps; [ pip cookiecutter ]))
               awscli2
               ripgrep
               xcode-install
-              python3Packages.cookiecutter
               gitAndTools.gh
-              werkflow
             ];
             shellHook =
               let
@@ -110,15 +108,6 @@
               sha256 = "0hi0529jsdx7z7qlsvdg98fddxbv7grd68fkm8f6vllkzi57r1rj";   
             })
           );
-        werkflow = prev.pkgs.python3Packages.buildPythonPackage rec {
-          pname = "werkflow";
-          version = "0.1.4";
-          format = "wheel";
-          src = prev.pkgs.python3Packages.fetchPypi {
-            inherit pname version;
-            sha256 = "sha256-KGcyxDfhsWNAKQcD45giu/o9B7ZNSMtKatRGgZr5V/0="; # TODO
-          };
-        };
       };
     };
 }
