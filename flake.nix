@@ -67,7 +67,6 @@
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
 
                 cp justfile $HOME
-                cp .envrc $HOME
               '';
           };
         }) // {

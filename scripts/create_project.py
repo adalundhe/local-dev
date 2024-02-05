@@ -24,9 +24,8 @@ def execute_in_shell(
             text=True,
         )
 
-        result.communicate(
-            input=interactive_input
-        )
+        result.communicate(interactive_input)
+
 
     else:
         result = subprocess.run(
@@ -110,21 +109,12 @@ def execute_command(args: Dict[str, str]):
     if not project_name.startswith('/') or ':\\' not in project_name:
         project_path = os.path.join(current_directory, project_name)
 
-    project_template_path = f'{project_template}-template'
-
     execute_in_shell(
-        f"git clone --branch {project_template} git@github.com:{project_template_repo} {project_template_path}",
-        current_directory
-    )
-
-    execute_in_shell(
-        f'cookiecutter {project_template_path}',
+        f'cookiecutter git@github.com:{project_template_repo} --checkout {project_template}',
         current_directory,
-        interactive_input=project_name,
+        interactive_input=f'y\n{project_name}',
         skip_error=True
     )
-
-    shutil.rmtree(project_template_path)
 
     commands = [
         "rm -rf .git",
