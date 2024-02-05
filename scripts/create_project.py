@@ -1,10 +1,9 @@
 #!/usr/bin/python
 
-import sys
 import os
-import shutil
-import textwrap
 import subprocess
+import sys
+import textwrap
 from typing import Dict, List, Optional
 
 
@@ -49,8 +48,12 @@ def parse_args(args_set: List[str]):
     ]
 
     arg_options = [
-        arg for arg in args_set if arg.startswith('--')
+        arg for arg in args_set if arg.startswith('--') and '--base-path' not in arg
     ]
+
+    base_path = [
+        arg for arg in args_set if '--base-path' in arg
+    ].pop()
 
     if show_help or len(arg_options) < 1:
         print(
@@ -85,7 +88,10 @@ def parse_args(args_set: List[str]):
             )
         )
 
-        return {}
+        return (
+            base_path,
+            {}
+        )
 
     args = {}
     for arg in arg_options:
@@ -93,11 +99,17 @@ def parse_args(args_set: List[str]):
             arg_name, arg_value = arg.split("=", maxsplit=1)
             args[arg_name.strip("-")] = arg_value
 
-    return args
+    return (
+        base_path,
+        args
+    )
 
 
-def execute_command(args: Dict[str, str]):
-    current_directory = os.getcwd()
+def execute_command(
+    base_path: str,
+    args: Dict[str, str]
+):
+    current_directory = base_path
     project_name = args.get("name", "myapp")
     project_template = args.get("template", "fast-api")
     project_template_repo = args.get("template-repo", "scorbettUM/app-templates")
@@ -152,12 +164,15 @@ def execute_command(args: Dict[str, str]):
 
 
 def run():
-    args = parse_args(sys.argv)
+    base_path, args = parse_args(sys.argv)
 
     if len(args) < 1:
         return
     
-    execute_command(args)
+    execute_command(
+        base_path,
+        args
+    )
 
 
 run()
