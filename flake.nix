@@ -45,7 +45,6 @@
               kubernetes
               minikube
               jq
-              k9s
               helmfile
               openssh
               kubernetes-helm
