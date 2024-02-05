@@ -51,9 +51,13 @@ def parse_args(args_set: List[str]):
         arg for arg in args_set if arg.startswith('--') and '--base-path' not in arg
     ]
 
-    base_path = [
+    base_paths = [
         arg for arg in args_set if '--base-path' in arg
-    ].pop()
+    ]
+
+    base_path = os.getcwd()
+    if len(base_paths) == 1:
+        base_path = base_paths.pop()
 
     if show_help or len(arg_options) < 1:
         print(
