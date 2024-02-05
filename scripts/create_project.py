@@ -11,8 +11,7 @@ from typing import Dict, List, Optional
 def execute_in_shell(
     command: str,
     project_path: str,
-    interactive_input: Optional[str]=None,
-    skip_error: bool=False
+    interactive_input: Optional[str]=None
 ):
     if interactive_input:
         result = subprocess.Popen(
@@ -37,7 +36,7 @@ def execute_in_shell(
             text=True,
         )
         
-    if result.returncode > 0 and skip_error is False:
+    if result.returncode > 0:
         raise Exception(f"Err. - Template creation failed:\n{result.stderr}\n{result.stdout}")
     
     return result
@@ -120,8 +119,7 @@ def execute_command(args: Dict[str, str]):
     execute_in_shell(
         f'cookiecutter {project_template_path}',
         current_directory,
-        interactive_input=project_name,
-        skip_error=True
+        interactive_input=project_name
     )
 
     shutil.rmtree(project_template_path)
