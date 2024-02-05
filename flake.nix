@@ -91,12 +91,12 @@
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
-            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" "E303" ];
+            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" "E303" "E126" "E131" ];
           }
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/create_project.py"; 
-              sha256 = "1x3vxwln7gkk7f8r6q9c4k5wa9wi6fw4dn9wbyfiqdnbnm8jzf9b";   
+              sha256 = "0bpfwpic70vafb90sxanzchm8mr5j7p10gsbsa7z76rxb3i1plm4";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
