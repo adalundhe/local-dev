@@ -9,14 +9,14 @@ from typing import Dict, List, Optional
 
 def execute_in_shell(
     command: str,
-    project_path: str,
+    path: str,
     interactive_input: Optional[str]=None,
     skip_error: bool=False
 ):
     if interactive_input:
         result = subprocess.Popen(
             command.split(),
-            cwd=project_path,
+            cwd=path,
             stdin=subprocess.PIPE,
             stderr=subprocess.PIPE,
             stdout=subprocess.PIPE,
@@ -29,7 +29,7 @@ def execute_in_shell(
     else:
         result = subprocess.run(
             command.split(),
-            cwd=project_path,
+            cwd=path,
             stderr=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True,
@@ -108,13 +108,13 @@ def execute_command(
     project_flake = args.get("flake", "python3")
     project_remote = args.get("remote")
 
-    project_path = project_name
+    project_creation_path = project_name
     if not project_name.startswith('/') or ':\\' not in project_name:
-        project_path = os.path.join(project_path, project_name)
+        project_creation_path = os.path.join(project_path, project_name)
 
     execute_in_shell(
         f'cookiecutter git@github.com:{project_template_repo} --checkout {project_template}',
-        project_path,
+        project_creation_path,
         interactive_input=f'y\n{project_name}',
         skip_error=True
     )
@@ -129,11 +129,11 @@ def execute_command(
     for command in commands:
         execute_in_shell(
             command,
-            project_path
+            project_creation_path
         )
 
     envrc_path = os.path.join(
-        project_path,
+        project_creation_path,
         '.envrc'
     )
 
@@ -144,13 +144,13 @@ def execute_command(
 
     execute_in_shell(
         "git add -A",
-        project_path
+        project_creation_path
     ) 
 
     if project_remote:
         execute_in_shell(
             f'git remote add origin {project_remote}',
-            project_path
+            project_creation_path
         ) 
 
 
