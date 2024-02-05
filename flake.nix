@@ -39,6 +39,7 @@
               awscli2
               ripgrep
               xcode-install
+              python3Packages.cookiecutter
             ];
             shellHook =
               let

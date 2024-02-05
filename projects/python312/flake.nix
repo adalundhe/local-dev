@@ -26,7 +26,6 @@
               python312
               poetry
               python312Packages.pip
-              python312Packages.cookiecutter
             ];
           };
         }

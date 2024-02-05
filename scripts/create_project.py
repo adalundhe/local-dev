@@ -81,7 +81,7 @@ def parse_args(args_set: List[str]):
 
 def execute_command(args: Dict[str, str]):
     current_directory = os.getcwd()
-    project_directory = args.get("path", "my_project")
+    project_directory = args.get("name", "my_project")
     project_template = args.get("template", "fast-api")
     project_template_repo = args.get("template-repo", "scorbettUM/app-templates")
     project_flake_repo = args.get("flake-repo", "scorbettUM/local-dev")
@@ -95,8 +95,17 @@ def execute_command(args: Dict[str, str]):
     if os.path.exists(project_path) is False:
         os.makedirs(project_path)
 
+    execute_in_shell(
+        f"git clone --branch {project_template} git@github.com:{project_template_repo} {project_directory}",
+        current_directory
+    )
+
+    execute_in_shell(
+        f'cookiecutter {project_directory}',
+        current_directory
+    )
+
     commands = [
-        f"git clone --branch {project_template} git@github.com:{project_template_repo} .",
         "rm -rf .git",
         "git init",
         "git add -A",

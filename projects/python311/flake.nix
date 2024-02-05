@@ -20,7 +20,6 @@
               poetry
               pyenv
               python311Packages.pip
-              python311Packages.cookiecutter
             ];
           };
         }
