@@ -23,9 +23,7 @@ def execute_in_shell(
             text=True,
         )
 
-        stdoute, stderr = result.communicate(interactive_input)
-        print(stdoute, stderr)
-
+        result.communicate(interactive_input)
 
     else:
         result = subprocess.run(
