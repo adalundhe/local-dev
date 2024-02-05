@@ -87,7 +87,7 @@
         };
         create-project = prev.writers.writePython3Bin "create-project"
           {
-            libraries = [ ];
+            libraries = [];
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
