@@ -97,7 +97,7 @@ def create(
     execute_in_shell(
         f'cookiecutter git@github.com:{project_template_repo} --checkout {template}',
         path,
-        interactive_input=f'y\n{name}',
+        interactive_input=f'y\n{name}\n{version}',
         skip_error=True
     )
 

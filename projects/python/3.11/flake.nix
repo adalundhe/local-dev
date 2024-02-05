@@ -18,7 +18,6 @@
             buildInputs = [
               python311
               poetry
-              pyenv
               python311Packages.pip
             ];
           };

@@ -18,7 +18,6 @@
             buildInputs = [
               python3
               poetry
-              pyenv
               python3Packages.pip
             ];
           };

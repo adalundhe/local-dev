@@ -18,7 +18,6 @@
             buildInputs = [
               python310
               poetry
-              pyenv
               python310Packages.pip
             ];
           };
