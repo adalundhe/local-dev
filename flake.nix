@@ -87,8 +87,8 @@
         };
         blueprint = prev.writers.writePython3Bin "blueprint"
           {
-            libraries = with prev.python3Packages; [
-              click
+            libraries = [
+              (prev.python3.withPackages (ps: with ps; [click]))
             ];
 
             # There is an annoying list of linting args we have to disable
