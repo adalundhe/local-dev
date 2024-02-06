@@ -106,12 +106,12 @@
 
             # There is an annoying list of linting args we have to disable
             # so Nix will let us build our script in peace.
-            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" "E303" "E222"];
+            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" "E303" ];
           }
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/blueprint.py"; 
-              sha256 = "1xaayjljg2jjmms073cilpv345szvj2l4wfaccsmxz390ngnki0v";   
+              sha256 = "0na8d2bv3ljrwhf1k7x33k663a0bvfxsp6qj8dq7i1q0sx3kzwh3";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
