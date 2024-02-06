@@ -23,6 +23,12 @@
         {
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
+              k9s
+              terraform
+              dcon
+              poetry
+              (python3.withPackages (ps: with ps; [ pip cookiecutter ]))
+              awscli2
               bashInteractive
               blueprint
               aws-login
@@ -35,8 +41,6 @@
               nixpkgs-fmt
               nodejs_20
               nodejs_20.pkgs.pnpm
-              (python3.withPackages (ps: with ps; [ pip cookiecutter ]))
-              awscli2
               ripgrep
               xcode-install
               python3Packages.pip
@@ -49,11 +53,6 @@
               rustc
               cargo
               go_1_21
-              k9s
-              terraform
-              dcon
-              poetry
-              curl
             ];
             shellHook =
               let
