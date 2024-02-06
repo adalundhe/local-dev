@@ -23,10 +23,6 @@
         {
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
-              k9s
-              terraform
-              dcon
-              poetry
               (python3.withPackages (ps: with ps; [ pip cookiecutter ]))
               awscli2
               bashInteractive
@@ -53,6 +49,10 @@
               rustc
               cargo
               go_1_21
+              k9s
+              terraform
+              dcon
+              poetry
             ];
             shellHook =
               let
