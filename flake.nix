@@ -52,6 +52,8 @@
               k9s
               terraform
               dcon
+              poetry
+              curl
             ];
             shellHook =
               let
@@ -139,6 +141,23 @@
               sha256 = "0hi0529jsdx7z7qlsvdg98fddxbv7grd68fkm8f6vllkzi57r1rj";   
             })
           );
+        # Unfortunately something installs a newer version of urllib3 that
+        # completely breaks awscli. Joy.
+        python3 = prev.python3.override {
+          packageOverrides = python-self: python-super: {
+            urllib3 = python-super.urllib3.overridePythonAttrs (attrs: {
+              pyproject = true;
+              version = "1.26.18";
+              nativeBuildInputs = with prev.python3Packages; [
+                setuptools
+              ];
+              src = attrs.src.override {
+                version = "1.26.18";
+                hash = "sha256-+OzBu6VmdBNFfFKauVW/jGe0XbeZ0VkGYmFxnjKFgKA=";
+              };
+            });
+          };
+        };
       };
     };
 }
