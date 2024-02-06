@@ -78,6 +78,7 @@
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
 
                 cp justfile $HOME
+                echo 'nix develop "github:scorbettum:local-dev"' | tee -a $HOME/.zhsrc > /dev/null
               '';
           };
         }) // {
