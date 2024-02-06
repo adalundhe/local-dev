@@ -5,6 +5,9 @@ import subprocess
 from typing import Optional
 
 import click
+import requests
+import semver
+from requests import Response
 
 
 def execute_in_shell(
@@ -38,6 +41,17 @@ def execute_in_shell(
         raise Exception(f"Err. - Template creation failed:\n{result.stderr}\n{result.stdout}")
     
     return result
+
+
+def get_latest_version():
+    result: Response = requests.get(
+        "https://endoflife.date/api/python.json"
+    )
+    parsed_result = result.json()
+    version_string =  parsed_result[0]["latest"]
+
+    version_data = semver.Version.parse(version_string)
+    return f'{version_data.major}.{version_data.minor}'
 
 
 @click.group()
@@ -75,7 +89,6 @@ def project():
 )
 @click.option(
     '--version',
-    default='3',
     help='The version of the language to use for the template.'
 )
 def create(
@@ -84,8 +97,11 @@ def create(
     path: str,
     template: str,
     language: str,
-    version: str
+    version: Optional[str]
 ):
+    if version is None:
+        version = get_latest_version()
+        
     project_template_repo = "scorbettUM/app-templates"
     project_flake_repo = "scorbettUM/local-dev"
 
