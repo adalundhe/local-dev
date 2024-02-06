@@ -24,35 +24,7 @@
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               (python3.withPackages (ps: with ps; [ pip cookiecutter ]))
-              awscli2
-              bashInteractive
-              blueprint
-              aws-login
-              devcontainers
-              direnv
-              docker
-              docker-compose
-              gum
-              just
-              nixpkgs-fmt
-              nodejs_20
-              nodejs_20.pkgs.pnpm
-              ripgrep
-              xcode-install
-              python3Packages.pip
-              python3Packages.cookiecutter
-              gitAndTools.gh
-              kubernetes
-              kubernetes-helm
-              kubectx
-              minikube
-              rustc
-              cargo
-              go_1_21
-              k9s
-              terraform
-              dcon
-              poetry
+              awscli
             ];
             shellHook =
               let
