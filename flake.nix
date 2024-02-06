@@ -52,7 +52,6 @@
               k9s
               terraform
               dcon
-              poetry
             ];
             shellHook =
               let
