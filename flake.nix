@@ -53,6 +53,8 @@
               terraform
               dcon
               poetry
+              curl
+              openssl
             ];
             shellHook =
               let
