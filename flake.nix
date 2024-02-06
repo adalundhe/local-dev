@@ -51,6 +51,7 @@
               go_1_21
               k9s
               terraform
+              dcon
             ];
             shellHook =
               let
@@ -113,6 +114,22 @@
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/blueprint.py"; 
               sha256 = "0na8d2bv3ljrwhf1k7x33k663a0bvfxsp6qj8dq7i1q0sx3kzwh3";   
+            })
+          );
+        dcon = prev.writers.writePython3Bin "dcon"
+          {
+            libraries = with prev.python3Packages; [
+              click
+            ];
+
+            # There is an annoying list of linting args we have to disable
+            # so Nix will let us build our script in peace.
+            flakeIgnore = [ "E501" "F401" "W292" "W291" "E265" "W293" "E252" "E303" ];
+          }
+          (builtins.readFile(
+            builtins.fetchurl {
+              url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/devcontainers.py"; 
+              sha256 = "";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"

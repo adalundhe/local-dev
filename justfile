@@ -31,7 +31,5 @@ aws-login profile=profile region=region:
     aws-login {{profile}} {{region}}
 
 
-dev:
-    devcontainer build
-    devcontainer up
-    devcontainer open
+container:
+    dcon
