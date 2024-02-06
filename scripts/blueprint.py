@@ -48,7 +48,7 @@ def get_latest_version():
         "https://endoflife.date/api/python.json"
     )
     parsed_result = result.json()
-    version_string =  parsed_result[0]["latest"]
+    version_string = parsed_result[0]["latest"]
 
     version_data = semver.Version.parse(version_string)
     return f'{version_data.major}.{version_data.minor}'
