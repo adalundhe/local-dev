@@ -52,6 +52,7 @@
               k9s
               terraform
               dcon
+              poetry
             ];
             shellHook =
               let
@@ -129,7 +130,7 @@
           (builtins.readFile(
             builtins.fetchurl {
               url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/scripts/devcontainers.py"; 
-              sha256 = "";   
+              sha256 = "0b0acsa4gfcqcxqzildb1vagmcqjllsh95l2qxx823qagalzpbnq";   
             })
           );
         aws-login = prev.writers.writeBashBin "aws-login"
