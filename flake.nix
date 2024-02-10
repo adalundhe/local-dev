@@ -79,7 +79,6 @@
                 
                 cp -n justfile  ~/justfile 2> /dev/null || :
 
-
                 grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc \
                 || echo 'source "$HOME/.devenv/bin/activate"' \
                 | tee -a ~/.zshrc > /dev/null
