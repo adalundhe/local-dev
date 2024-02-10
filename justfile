@@ -37,7 +37,7 @@ remove:
     sed -i 's/nix develop \"github:scorbettum\/local-dev\"//g' "$HOME/.zshrc"
     sed -i 's/source \"$HOME\/.devenv\/bin\/activate\"//g' "$HOME/.zshrc"
     sed -i 's/source \"$HOME\/.devenv\/bin\/activate\"//g' "$HOME/.zshrc"
-    sed -i 's/eval $(direnv hook zsh)//g' "$HOME/.zshrc"
+    sed -i 's/eval \"$(direnv hook zsh)\"//g' "$HOME/.zshrc"
     rm -rf "$HOME/justfile"
     echo "Please reopen your terminal."
 
