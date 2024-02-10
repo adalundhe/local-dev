@@ -31,6 +31,10 @@ update:
     rm -rf "$HOME/.cache/nix" && \
     nix develop "github:scorbettum/local-dev"
 
+remove:
+    sed -i 'nix develop "github:scorbettum/local-dev"' "$HOME/.zshrc"
+    rm -rf "$HOME/justfile"
+
 aws-login profile=profile region=region:
     aws-login {{profile}} {{region}}
 
