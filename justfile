@@ -27,6 +27,9 @@ create-werkflow name *ARGS:
     blueprint --path {{base_path}} --name {{name}} --template werkflow {{ARGS}}
     poetry lock && poetry update
 
+update:
+    rm -rf "$HOME/.cache/nix" && \
+    nix develop "github:scorbettum/local-dev"
 
 aws-login profile=profile region=region:
     aws-login {{profile}} {{region}}
