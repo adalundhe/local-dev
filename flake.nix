@@ -79,7 +79,7 @@
 
                 cp justfile $HOME
                 python3 -m venv $HOME/.devenv && \
-                source $HOME/.devenv/bin/activate && \
+                source "$HOME/.devenv/bin/activate" && \
                 pip install --index-url=https://pypi.org/simple poetry
 
                 echo 'source "$HOME/.devenv/bin/activate"' | tee -a $HOME/.zshrc > /dev/null

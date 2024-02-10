@@ -22,7 +22,8 @@ create-werkflow name *ARGS:
     #! /usr/bin/env bash
     just setup-venv ".{{name}}" && \
     source .{{name}}/bin/activate && \
-    pip install werkflow
+    pip install poetry && \
+    poetry init -q --name={{name}}
 
     blueprint --path {{base_path}} --name {{name}} --template=werkflow {{ARGS}}
 
