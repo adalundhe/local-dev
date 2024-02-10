@@ -5,7 +5,7 @@ base_path := invocation_directory()
 
 
 blueprint *ARGS:
-    blueprint "--path {{base_path}}"  "{{ARGS}}"
+    blueprint {{ARGS}} --path {{base_path}}
 
 
 setup-venv venv_path requirements_path=requirements_path:
