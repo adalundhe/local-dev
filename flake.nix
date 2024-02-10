@@ -52,7 +52,6 @@
               terraform
               dcon
               wget
-              justfile
             ];
             shellHook =
               let
@@ -77,6 +76,7 @@
                 ${sourceEnv ".env"}
                 ${sourceEnv ".env.local"}
 
+                wget -O justfile "https://raw.githubusercontent.com/scorbettUM/local-dev/main/justfile" -P $HOME
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
                 
 
@@ -147,10 +147,6 @@
               sha256 = "0hi0529jsdx7z7qlsvdg98fddxbv7grd68fkm8f6vllkzi57r1rj";   
             })
           );
-        justfile = builtins.fetchurl({
-          url = "https://raw.githubusercontent.com/scorbettUM/local-dev/main/justfile"; 
-          sha256 = "136636hglqfph4qrn66xid0zqpwkjbxcpdf3c7n4dig3xa3ilxq1";   
-        });
         # Unfortunately something installs a newer version of urllib3 that
         # completely breaks awscli. Joy.
         python3 = prev.python3.override {
