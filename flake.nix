@@ -76,7 +76,7 @@
                 ${sourceEnv ".env"}
                 ${sourceEnv ".env.local"}
 
-                wget -O justfile "https://raw.githubusercontent.com/scorbettUM/local-dev/main/justfile" -P $HOME
+                wget -q -O justfile "https://raw.githubusercontent.com/scorbettUM/local-dev/main/justfile" -P $HOME
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
                 
 
