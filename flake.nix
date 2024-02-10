@@ -77,7 +77,7 @@
 
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
                 
-                cp -u justfile $HOME/justfile
+                cp -n justfile  ~/justfile 2> /dev/null || :
 
 
                 grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc \
