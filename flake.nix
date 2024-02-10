@@ -81,7 +81,7 @@
                   cp justfile $HOME
                 fi
 
-                if grep -Fxq 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc; then
+                if $(grep -Fxq 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc); then
                   echo "Python env is set to go!"
                 else
                   python3 -m venv $HOME/.devenv && \
@@ -91,7 +91,7 @@
                   echo 'source "$HOME/.devenv/bin/activate"' | tee -a $HOME/.zshrc > /dev/null
                 fi
 
-                if grep -Fxq 'nix develop "github:scorbettum:local-dev"' $HOME/.zshrc; then
+                if $(grep -Fxq 'nix develop "github:scorbettum:local-dev"' $HOME/.zshrc); then
                   echo "Flake is setup!"
                 else
                   echo 'nix develop "github:scorbettum:local-dev"' | tee -a $HOME/.zhsrc > /dev/null
