@@ -86,6 +86,8 @@
                 grep -qxF 'nix develop "github:scorbettum/local-dev"' $HOME/.zshrc \
                 || echo 'nix develop "github:scorbettum/local-dev"' \
                 | tee -a ~/.zshrc > /dev/null
+
+                direnv allow
                 
               '';
           };
