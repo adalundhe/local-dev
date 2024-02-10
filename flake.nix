@@ -88,7 +88,7 @@
                 || echo 'nix develop "github:scorbettum/local-dev"' \
                 | tee -a ~/.zshrc > /dev/null
 
-                grep -qxF 'eval $(direnv hook zsh)' $HOME/.zshrc \
+                grep -qxF 'eval "$(direnv hook zsh)"' $HOME/.zshrc \
                 || echo 'eval "$(direnv hook zsh)"' \
                 | tee -a ~/.zshrc > /dev/null
                 
