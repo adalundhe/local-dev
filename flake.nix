@@ -51,6 +51,7 @@
               k9s
               terraform
               dcon
+              wget
             ];
             shellHook =
               let
@@ -77,7 +78,7 @@
 
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
                 
-                cp justfile  $HOME/justfile 2> /dev/null || :
+                wget "https://raw.githubusercontent.com/scorbettUM/local-dev/main/justfile" -P $HOME
 
                 grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc \
                 || echo 'source "$HOME/.devenv/bin/activate"' \
