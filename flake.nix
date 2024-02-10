@@ -52,6 +52,7 @@
               terraform
               dcon
               wget
+              pyenv
             ];
             shellHook =
               let
