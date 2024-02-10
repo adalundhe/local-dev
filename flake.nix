@@ -89,7 +89,7 @@
                 | tee -a ~/.zshrc > /dev/null
 
                 grep -qxF 'eval $(direnv hook zsh)' $HOME/.zshrc \
-                || echo 'eval $(direnv hook zsh)' \
+                || echo 'eval "$(direnv hook zsh)"' \
                 | tee -a ~/.zshrc > /dev/null
                 
               '';
