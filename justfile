@@ -17,9 +17,6 @@ setup-venv venv_path requirements_path=requirements_path:
         pip install {{requirements_path}}
     fi
 
-dev:
-    source ~/.devenv/bin/activate
-
 create-werkflow name *ARGS:
     #! /usr/bin/env bash
     just setup-venv ".{{name}}" && \
