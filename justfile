@@ -24,7 +24,7 @@ werkflow name:
     source .{{name}}/bin/activate && \
     pip install werkflow
 
-    blueprint --path="$PWD" --name={{name}} --template=werkflow
+    blueprint --path {{base_path}} --name {{name}} --template=werkflow
 
 
 aws-login profile=profile region=region:
