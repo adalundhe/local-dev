@@ -5,7 +5,7 @@ base_path := invocation_directory()
 
 
 blueprint *ARGS:
-    blueprint {{ARGS}} --path {{base_path}}
+    blueprint create {{ARGS}} --path {{base_path}}
 
 
 setup-venv venv_path requirements_path=requirements_path:
@@ -21,11 +21,10 @@ create-werkflow name *ARGS:
     #! /usr/bin/env bash
     just setup-venv ".{{name}}" && \
     source .{{name}}/bin/activate && \
-    pip install poetry && \
-    poetry init -q --name={{name}}
+    pip install --quiet poetry && \
+    poetry init -q --name={{name}} \
 
-    blueprint --path {{base_path}} --name {{name}} --template werkflow {{ARGS}}
-    poetry lock && poetry update
+    blueprint create {{ARGS}} --path {{base_path}} --name {{name}} --template werkflow
 
 update:
     rm -rf "$HOME/.cache/nix" && \
