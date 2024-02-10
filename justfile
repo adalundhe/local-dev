@@ -24,7 +24,7 @@ create-werkflow name *ARGS:
     pip install poetry && \
     poetry init -q --name={{name}}
 
-    blueprint --path {{base_path}} --name {{name}} --template=werkflow {{ARGS}}
+    blueprint --path {{base_path}} --name {{name}} --template werkflow {{ARGS}}
     poetry lock && poetry update
 
 
