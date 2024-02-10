@@ -18,7 +18,7 @@ setup-venv venv_path requirements_path=requirements_path:
     fi
 
 
-werkflow name *ARGS:
+create-werkflow name *ARGS:
     #! /usr/bin/env bash
     just setup-venv ".{{name}}" && \
     source .{{name}}/bin/activate && \
