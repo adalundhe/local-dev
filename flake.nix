@@ -78,6 +78,12 @@
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
                 
                 cp -u justfile $HOME/justfile
+
+
+                grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc \
+                || echo 'source "$HOME/.devenv/bin/activate"' \
+                | tee -a ~/.zshrc > /dev/null
+
                 grep -qxF 'nix develop "github:scorbettum/local-dev"' $HOME/.zshrc \
                 || echo 'nix develop "github:scorbettum/local-dev"' \
                 | tee -a ~/.zshrc > /dev/null
