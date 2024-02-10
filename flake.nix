@@ -77,25 +77,6 @@
 
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
 
-                if [[ ! -e "$HOME/justfile" ]]; then
-                  cp justfile $HOME
-                fi
-
-                if $(grep -Fxq 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc); then
-                  echo "Python env is set to go!"
-                else
-                  python3 -m venv $HOME/.devenv && \
-                  source "$HOME/.devenv/bin/activate" && \
-                  pip install --index-url=https://pypi.org/simple poetry
-
-                  echo 'source "$HOME/.devenv/bin/activate"' | tee -a $HOME/.zshrc > /dev/null
-                fi
-
-                if $(grep -Fxq 'nix develop "github:scorbettum:local-dev"' $HOME/.zshrc); then
-                  echo "Flake is setup!"
-                else
-                  echo 'nix develop "github:scorbettum:local-dev"' | tee -a $HOME/.zhsrc > /dev/null
-                fi
               '';
           };
         }) // {
