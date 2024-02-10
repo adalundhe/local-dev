@@ -46,5 +46,5 @@ aws-login profile=profile region=region:
     aws-login {{profile}} {{region}}
 
 
-container *ARGS:
-    dcon {{ARGS}}
+container:
+    dcon
