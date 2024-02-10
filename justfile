@@ -18,13 +18,13 @@ setup-venv venv_path requirements_path=requirements_path:
     fi
 
 
-werkflow name:
+werkflow name *ARGS:
     #! /usr/bin/env bash
     just setup-venv ".{{name}}" && \
     source .{{name}}/bin/activate && \
     pip install werkflow
 
-    blueprint --path {{base_path}} --name {{name}} --template=werkflow
+    blueprint --path {{base_path}} --name {{name}} --template=werkflow {{ARGS}}
 
 
 aws-login profile=profile region=region:
