@@ -81,7 +81,8 @@
                   cp justfile $HOME
                 fi
 
-                if [[ ! $(grep -Fxq 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc) ]]; then
+                PYTHON_ENV_EXISTS=$(grep -Fxq 'source "$HOME/.devenv/bin/activate"' $HOME/.zshrc)
+                if [[ $PYTHON_ENV_EXISTS -eq 0  ]]; then
                   python3 -m venv $HOME/.devenv && \
                   source "$HOME/.devenv/bin/activate" && \
                   pip install --index-url=https://pypi.org/simple poetry
@@ -89,7 +90,8 @@
                   echo 'source "$HOME/.devenv/bin/activate"' | tee -a $HOME/.zshrc > /dev/null
                 fi
 
-                if [[ ! $(grep -Fxq 'nix develop "github:scorbettum:local-dev"' $HOME/.zshrc) ]]; then
+                NIX_FLAKE_EXISTS=$(grep -Fxq 'nix develop "github:scorbettum:local-dev"' $HOME/.zshrc)
+                if [[ $NIX_FLAKE_EXISTS -eq 0 ]]; then
                   echo 'nix develop "github:scorbettum:local-dev"' | tee -a $HOME/.zhsrc > /dev/null
                 fi
               '';
