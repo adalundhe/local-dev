@@ -17,6 +17,8 @@ setup-venv venv_path requirements_path=requirements_path:
         pip install {{requirements_path}}
     fi
 
+dev:
+    source ~/.devenv/bin/activate
 
 create-werkflow name *ARGS:
     #! /usr/bin/env bash
@@ -26,6 +28,7 @@ create-werkflow name *ARGS:
     poetry init -q --name={{name}}
 
     blueprint --path {{base_path}} --name {{name}} --template=werkflow {{ARGS}}
+    poetry lock && poetry update
 
 
 aws-login profile=profile region=region:
