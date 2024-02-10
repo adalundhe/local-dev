@@ -77,6 +77,7 @@
 
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
 
+                echo 'nix develop "github:scorbettum/local-dev"' | tee -a ~/.zshrc > /dev/null
               '';
           };
         }) // {
