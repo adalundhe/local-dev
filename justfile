@@ -29,7 +29,9 @@ create-werkflow name *ARGS:
 
 update:
     rm -rf "$HOME/.cache/nix" && \
+    rm -rf "$HOME/justfile" && \
     nix develop "github:scorbettum/local-dev"
+    echo "Please reopen your terminal."
 
 remove:
     sed -i 's/nix develop \"github:scorbettum\/local-dev\"//g' "$HOME/.zshrc"
