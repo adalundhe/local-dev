@@ -78,6 +78,11 @@
                 [[ -f justfile  ]] && command -v just >/dev/null 2>&1 && just --list --unsorted
 
                 cp justfile $HOME
+                python3 -m venv $HOME/.devenv && \
+                source $HOME/.devenv/bin/activate && \
+                pip install poetry
+
+                echo 'source "$HOME/.devenv/bin/activate"' | tee -a $HOME/.zshrc > /dev/null
                 echo 'nix develop "github:scorbettum:local-dev"' | tee -a $HOME/.zhsrc > /dev/null
               '';
           };
