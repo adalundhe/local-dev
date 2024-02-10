@@ -32,7 +32,7 @@ update:
     nix develop "github:scorbettum/local-dev"
 
 remove:
-    sed -i 'nix develop "github:scorbettum/local-dev"' "$HOME/.zshrc"
+    sed -i 's/nix develop \"github:scorbettum\/local-dev\"//g' "$HOME/.zshrc"
     rm -rf "$HOME/justfile"
 
 aws-login profile=profile region=region:
