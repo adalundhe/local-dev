@@ -38,6 +38,7 @@ remove:
     sed -i 's/source \"$HOME\/.devenv\/bin\/activate\"//g' "$HOME/.zshrc"
     sed -i 's/source \"$HOME\/.devenv\/bin\/activate\"//g' "$HOME/.zshrc"
     sed -i 's/eval \"$(direnv hook zsh)\"//g' "$HOME/.zshrc"
+    rm -rf "$HOME/.cache/nix"
     rm -rf "$HOME/justfile"
     echo "Please reopen your terminal."
 
