@@ -41,6 +41,7 @@
               python3Packages.pip
               python3Packages.cookiecutter
               nodePackages.typescript
+              nodePackages.ts-node
               gitAndTools.gh
               kubernetes
               kubernetes-helm
