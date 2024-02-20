@@ -40,6 +40,7 @@
               xcode-install
               python3Packages.pip
               python3Packages.cookiecutter
+              nodePackages.typescript
               gitAndTools.gh
               kubernetes
               kubernetes-helm
