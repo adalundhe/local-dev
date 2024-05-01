@@ -87,8 +87,12 @@
                 || echo 'source "$HOME/.devenv/bin/activate"' \
                 | tee -a ~/.zshrc > /dev/null
 
-                grep -qxF 'nix develop "github:scorbettum/local-dev"' $HOME/.zshrc \
-                || echo 'nix develop "github:scorbettum/local-dev"' \
+                grep -qxF 'if [[ "$PWD" == "$HOME" ]]; then
+    nix develop "github:scorbettum/local-dev"
+fi' $HOME/.zshrc \
+                || echo 'if [[ "$PWD" == "$HOME" ]]; then
+    nix develop "github:scorbettum/local-dev"
+fi' \
                 | tee -a ~/.zshrc > /dev/null
 
                 grep -qxF 'eval "$(direnv hook zsh)"' $HOME/.zshrc \
