@@ -55,6 +55,7 @@
               dcon
               wget
               pyenv
+              argocd
             ];
             shellHook =
               let
