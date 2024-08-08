@@ -55,6 +55,7 @@
               dcon
               wget
               pyenv
+              argocd
             ];
             shellHook =
               let
@@ -100,21 +101,24 @@ fi' \
                 | tee -a ~/.zshrc > /dev/null
 
 
-                grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.bashrc \
-                || echo 'source "$HOME/.devenv/bin/activate"' \
-                | tee -a ~/.bashrc > /dev/null
+                if [[ -f ~/.bashrc ]]; then
+                  grep -qxF 'source "$HOME/.devenv/bin/activate"' $HOME/.bashrc \
+                  || echo 'source "$HOME/.devenv/bin/activate"' \
+                  | tee -a ~/.bashrc > /dev/null
 
-                grep -qxF 'if [[ "$PWD" == "$HOME" ]]; then
-    nix develop "github:scorbettum/local-dev"
-fi' $HOME/.bashrc \
-                || echo 'if [[ "$PWD" == "$HOME" ]]; then
-    nix develop "github:scorbettum/local-dev"
-fi' \
-                | tee -a ~/.bashrc > /dev/null
+                  grep -qxF 'if [[ "$PWD" == "$HOME" ]]; then
+      nix develop "github:scorbettum/local-dev"
+  fi' $HOME/.bashrc \
+                  || echo 'if [[ "$PWD" == "$HOME" ]]; then
+      nix develop "github:scorbettum/local-dev"
+  fi' \
+                  | tee -a ~/.bashrc > /dev/null
 
-                grep -qxF 'eval "$(direnv hook zsh)"' $HOME/.bashrc \
-                || echo 'eval "$(direnv hook zsh)"' \
-                | tee -a ~/.bashrc > /dev/null
+                  grep -qxF 'eval "$(direnv hook zsh)"' $HOME/.bashrc \
+                  || echo 'eval "$(direnv hook zsh)"' \
+                  | tee -a ~/.bashrc > /dev/null
+
+                fi
                 
               '';
           };
